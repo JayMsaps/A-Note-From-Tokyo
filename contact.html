@@ -70,6 +70,18 @@
         ::-webkit-scrollbar-track { background: #F8F5F2; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Sticky Soundcloud Player */
+        #sticky-player-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            transition: transform 0.3s ease-in-out;
+        }
+        #sticky-player-container:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -215,3 +227,4 @@
     </script>
 </body>
 </html>
+
