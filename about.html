@@ -70,6 +70,18 @@
         ::-webkit-scrollbar-track { background: #F8F5F2; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Sticky Soundcloud Player */
+        #sticky-player-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            transition: transform 0.3s ease-in-out;
+        }
+        #sticky-player-container:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -80,7 +92,7 @@
             <nav class="flex justify-between items-center text-gray-800">
                 <a href="index.html" class="flex items-center gap-2 text-xl tracking-wider">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#BC002D"/></svg>
-                    <span class="logo-font font-semibold">A note from Tokyo</span>
+                    <span class="logo-font font-semibold uppercase">A note from Tokyo</span>
                 </a>
                 <div class="hidden md:flex space-x-8 items-center font-medium uppercase text-sm tracking-widest">
                     <a href="index.html" class="hover:text-indigo-600 transition-colors">HOME</a>
@@ -109,10 +121,14 @@
     <main>
         <!-- =========== HERO BANNER FOR ABOUT PAGE =========== -->
         <section class="h-[60vh] flex items-center justify-center flag-bg">
-            <div class="text-center z-10 p-4 fade-in-section">
-                <div class="relative">
+            <div class="text-center z-10 p-4">
+                <div class="relative mb-4">
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight uppercase text-black">Our Philosophy</h1>
                     <h1 class="absolute inset-0 text-4xl md:text-6xl font-bold tracking-tight uppercase text-white" style="clip-path: circle(150px at center);">Our Philosophy</h1>
+                </div>
+                 <div class="relative">
+                    <p class="logo-font text-xl md:text-2xl max-w-2xl mx-auto text-black uppercase">A note from Tokyo</p>
+                    <p class="absolute inset-0 logo-font text-xl md:text-2xl max-w-2xl mx-auto text-white uppercase" style="clip-path: circle(150px at center);">A note from Tokyo</p>
                 </div>
             </div>
         </section>
@@ -184,6 +200,11 @@
             </div>
         </div>
     </footer>
+
+    <!-- Sticky SoundCloud Player -->
+    <div id="sticky-player-container">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1734880683&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
 
     <script>
         // --- Feather Icons Initialization ---
