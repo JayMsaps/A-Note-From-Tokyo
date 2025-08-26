@@ -59,6 +59,23 @@
             z-index: 2;
         }
 
+        /* Split-color text effect */
+        .split-text-container {
+            position: relative;
+            display: inline-block;
+        }
+        .split-text-container::after {
+            content: attr(data-text); /* Duplicates the text */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: white;
+            -webkit-clip-path: circle(150px at 50% 50%);
+            clip-path: circle(150px at 50% 50%); /* Clips the white text to a circle */
+        }
+
         /* Animation for elements fading in */
         .fade-in-section {
             opacity: 0;
@@ -190,7 +207,7 @@
         </div>
         <!-- Google Map Embed -->
         <div class="w-full h-[400px]">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.243588325985!2d139.7899500763567!3d35.6465692312676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601889f5f3363525%3A0x566c336ed3422153!2s3-ch%C5%8Dme-7-18%20Ariake%2C%20Koto%20City%2C%20Tokyo%20135-0063%2C%20Japan!5e0!3m2!1sen!2sus!4v1724674069317!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://maps.google.com/maps?q=3-chome-7%20Ariake,%20Koto%20City,%20Tokyo%20135-0063,%20Japan&t=&z=15&ie=UTF8&iwloc=B&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div class="container mx-auto px-6 py-12 text-center">
              <div class="mb-8">
