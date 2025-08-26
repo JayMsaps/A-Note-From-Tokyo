@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A note from Tokyo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter (sans-serif) & Shippori Mincho (serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Mailchimp CSS -->
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+
+    <style>
+        /* Custom styles to complement Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F5F2; /* Soft off-white background */
+            color: #1a1a1a;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Shippori Mincho', serif;
+        }
+        
+        /* Parallax effect for static background sections */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Hero Section Specifics */
+        #home {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dynamic Fading Background */
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fadeAnimation 42s infinite; /* 7 images * 6s each */
+        }
+
+        /* Stagger the animation for each slide */
+        .slide:nth-child(1) { animation-delay: 0s; }
+        .slide:nth-child(2) { animation-delay: 6s; }
+        .slide:nth-child(3) { animation-delay: 12s; }
+        .slide:nth-child(4) { animation-delay: 18s; }
+        .slide:nth-child(5) { animation-delay: 24s; }
+        .slide:nth-child(6) { animation-delay: 30s; }
+        .slide:nth-child(7) { animation-delay: 36s; }
+
+        @keyframes fadeAnimation {
+            0% { opacity: 0; }
+            5% { opacity: 1; } /* Fade in */
+            20% { opacity: 1; } /* Hold */
+            25% { opacity: 0; } /* Fade out */
+            100% { opacity: 0; }
+        }
+
+        /* Animation for elements fading in on scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8F5F2; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        
+        /* Arrow down animation in hero */
+        .scroll-down-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Mailchimp Form Style Overrides */
+        #mc_embed_signup{background:transparent; width: 100%;}
+        #mc_embed_signup form {padding: 0;}
+        #mc_embed_signup .mc-field-group {width: 100% !important; padding: 0 !important;}
+        #mc_embed_signup .mc-field-group input {width: 100% !important;}
+        #mc_embed_signup .clear.foot {display: flex; width: 100%;}
+        #mc_embed_signup .optionalParent {width: 100%;}
+
+        /* Responsive Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- =========== POP-UP MODAL =========== -->
+    <div id="popup-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-500">
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-8 relative transform scale-95 transition-all duration-500">
+            <button id="close-popup" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <div class="text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-gray-900">Your Chance to Win!</h2>
+                <p class="text-gray-600 mb-6">Sign up for exclusive notes from Tokyo and complete tasks for a chance to win <span class="font-bold text-indigo-600">$1,000,000</span>.</p>
+                <form action="#" class="flex flex-col space-y-4">
+                    <input type="email" placeholder="your.email@example.com" required class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign Up & Enter
+                    </button>
+                </form>
+                <a href="#" class="text-sm text-gray-500 mt-4 inline-block hover:underline">Learn more about the tasks</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== CONFIRMATION POP-UP MODAL =========== -->
+    <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-500">
+        <div id="confirm-modal-content" class="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-8 relative transform scale-95 transition-all duration-500">
+             <div class="text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-gray-900">Wait! Are you sure? 😢</h2>
+                <p class="text-gray-600 mb-6">This is a once-in-a-lifetime opportunity to win $1,000,000. Are you sure you want to miss out?</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button id="confirm-no-button" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Take Me Back!
+                    </button>
+                    <button id="confirm-yes-button" class="w-full bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-md hover:bg-gray-300 transition">
+                        Yes, I'm sure
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== HEADER & NAVIGATION =========== -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center text-white">
+                <a href="#" class="text-xl font-semibold tracking-wider" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">A note from Tokyo</a>
+                <div class="hidden md:flex space-x-8 items-center" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
+                    <a href="index.html" class="hover:text-gray-200 transition-colors">Home</a>
+                    <a href="about.html" class="hover:text-gray-200 transition-colors">About</a>
+                    <a href="gallery.html" class="hover:text-gray-200 transition-colors">Gallery</a>
+                    <a href="contact.html" class="hover:text-gray-200 transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-50">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <button id="close-mobile-menu" class="absolute top-6 right-6">
+                <i data-feather="x" class="w-8 h-8"></i>
+            </button>
+            <a href="index.html" class="text-2xl font-semibold mobile-link">Home</a>
+            <a href="about.html" class="text-2xl font-semibold mobile-link">About</a>
+            <a href="gallery.html" class="text-2xl font-semibold mobile-link">Gallery</a>
+            <a href="contact.html" class="text-2xl font-semibold mobile-link">Contact</a>
+        </div>
+    </div>
+
+
+    <main>
+        <!-- =========== HERO BANNER (WITH DYNAMIC FADING SLIDER) =========== -->
+        <section id="home" class="h-screen flex items-center justify-center text-white">
+            <!-- The Fading Slider -->
+            <div class="hero-slider">
+                <div class="slide" style="background-image: url('https://images.hdqwalls.com/download/mazda-rx7-city-night-lights-4k-4m-1360x768.jpg');"></div>
+                <div class="slide" style="background-image: url('https://thenavigatio.com/wp-content/uploads/2023/05/Meguro-river-sakura-at-night.jpg');"></div>
+                <div class="slide" style="background-image: url('https://images.getbento.com/accounts/b04840e8fde14267569d41f45a7857ed/media/lGSZbAFT4igFRlVSDjGe_924a8c56-3f61-4bd0-8f72-79885c9cab1b.jpg?w=1200&fit=crop&auto=compress,format&h=600');"></div>
+                <div class="slide" style="background-image: url('https://www.celebritycruises.com/blog/content/uploads/2024/12/what-is-tokyo-known-for-hero.jpg');"></div>
+                <div class="slide" style="background-image: url('https://www.lumle.com/wp-content/uploads/tokyo-temple.jpg');"></div>
+                <div class="slide" style="background-image: url('https://wallpaperaccess.com/full/19111.jpg');"></div>
+                <div class="slide" style="background-image: url('https://pbs.twimg.com/media/DYCF3qYWsAUrI09.jpg');"></div>
+            </div>
+            
+            <!-- Overlay and Text Content -->
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <div class="text-center z-10 p-4">
+                <h1 class="text-5xl md:text-8xl font-bold tracking-tighter mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">ノート</h1> <!-- Japanese for "Note" -->
+                <p class="text-lg md:text-2xl font-light" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">Discovering the soul of a city in motion.</p>
+            </div>
+            <a href="#intro" class="scroll-down-arrow z-10">
+                <i data-feather="arrow-down" class="w-8 h-8 text-white"></i>
+            </a>
+        </section>
+
+        <!-- =========== INTRO SECTION =========== -->
+        <section id="intro" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center max-w-3xl fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-6">An Invitation to Stillness</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Tokyo is a city of beautiful contradictions. A place where ancient temples stand in the shadow of neon-lit skyscrapers, and tranquil gardens offer quiet refuge from the bustling energy of the streets. This is our visual journal, a collection of moments and stories from the heart of Japan.
+                </p>
+            </div>
+        </section>
+
+        <!-- =========== EMBEDDED VIDEO SECTION =========== -->
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 fade-in-section">
+                <div class="max-w-4xl mx-auto text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl font-semibold mb-4">A Glimpse of Tokyo</h2>
+                     <p class="text-gray-600">Immerse yourself in the sights and sounds that define this captivating city.</p>
+                </div>
+                <div class="video-container rounded-lg overflow-hidden shadow-2xl mx-auto max-w-5xl">
+                    <iframe src="https://www.youtube.com/embed/6DQxRQb9dCE?si=cCZ8Vh4MsyWshBIn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+        
+        <!-- =========== FEATURED CONTENT SECTION =========== -->
+        <section class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+                    <div class="fade-in-section">
+                        <img src="https://japanstartshere.com/wp-content/uploads/2019/01/Fushimi-Inari-Night-1.jpg" alt="Fushimi Inari Shrine" class="rounded-lg shadow-xl w-full h-auto object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="fade-in-section">
+                        <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">Our Story</h3>
+                        <h2 class="text-3xl md:text-4xl font-semibold my-4">More Than a City</h2>
+                        <p class="text-gray-700 leading-relaxed mb-6">
+                            From the serene gardens of the Imperial Palace to the vibrant chaos of Shibuya Crossing, every corner tells a story. Our mission is to capture these fleeting moments, preserving the essence of Tokyo's unique blend of tradition and modernity.
+                        </p>
+                        <a href="about.html" class="inline-block bg-gray-800 text-white font-bold py-3 px-6 rounded-md hover:bg-gray-900 transition-transform transform hover:scale-105">
+                            Explore the About Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== MAILCHIMP WIDGET SECTION =========== -->
+        <section id="contact" class="py-20 md:py-32 bg-gray-800 text-white relative">
+             <div class="parallax" style="background-image: url('https://jw-webmagazine.com/wp-content/uploads/2019/07/jw-5d1f16749768f5.10952725.jpeg'); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.2;"></div>
+            <div class="container mx-auto px-6 text-center max-w-2xl fade-in-section relative z-10">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-4">Join Our Journey</h2>
+                <p class="text-gray-300 mb-8">Receive monthly notes and exclusive photos directly from Tokyo. No spam, just stories.</p>
+                
+                <!-- Begin Mailchimp Signup Form -->
+                <div id="mc_embed_signup" class="w-full max-w-lg mx-auto">
+                    <form action="https://gmail.us10.list-manage.com/subscribe/post?u=9a154649f2974d15e96616f1b&amp;id=cc4d1b69b2&amp;f_id=00a2d1e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll" class="flex flex-col sm:flex-row gap-4">
+                            <div class="mc-field-group flex-grow">
+                                <label for="mce-EMAIL" class="sr-only">Email Address</label>
+                                <input type="email" name="EMAIL" class="required email w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" id="mce-EMAIL" required placeholder="Enter your email">
+                            </div>
+                            <div id="mce-responses" class="clear foot hidden">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_9a154649f2974d15e96616f1b_cc4d1b69b2" tabindex="-1" value="">
+                            </div>
+                            <div class="clear">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button bg-indigo-600 text-white font-bold py-3 px-6 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer w-full sm:w-auto" value="Subscribe">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--End mc_embed_signup-->
+            </div>
+        </section>
+    </main>
+
+    <!-- =========== FOOTER =========== -->
+    <footer class="bg-white pt-16 pb-8">
+        <div class="container mx-auto px-6 text-center">
+             <h3 class="text-2xl font-semibold mb-6">Follow the Journey</h3>
+             <!-- Instagram Feed Embed -->
+             <div class="max-w-4xl mx-auto mb-8">
+                <div class='sk-instagram-feed' data-embed-id='25592416'></div><script src='https://widgets.sociablekit.com/instagram-feed/widget.js' defer></script>
+             </div>
+             <div class="flex justify-center space-x-6 mb-6">
+                 <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors"><i data-feather="instagram"></i></a>
+                 <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors"><i data-feather="twitter"></i></a>
+                 <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors"><i data-feather="youtube"></i></a>
+             </div>
+            <div class="text-gray-500 text-sm">
+                <p>&copy; 2024 A note from Tokyo. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Feather Icons Initialization ---
+        feather.replace();
+
+        // --- Pop-up Modal Logic ---
+        const popupModal = document.getElementById('popup-modal');
+        const modalContent = document.getElementById('modal-content');
+        const closePopupButton = document.getElementById('close-popup');
+        
+        const confirmModal = document.getElementById('confirm-modal');
+        const confirmModalContent = document.getElementById('confirm-modal-content');
+        const confirmYesButton = document.getElementById('confirm-yes-button');
+        const confirmNoButton = document.getElementById('confirm-no-button');
+
+        const showModal = () => {
+            popupModal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        };
+
+        const hideAllModals = () => {
+            modalContent.classList.add('scale-95');
+            confirmModalContent.classList.add('scale-95');
+            popupModal.classList.add('opacity-0');
+            confirmModal.classList.add('opacity-0');
+            setTimeout(() => {
+                popupModal.classList.add('pointer-events-none');
+                confirmModal.classList.add('pointer-events-none');
+            }, 500);
+        };
+        
+        const showConfirmModal = () => {
+            // Hide first modal
+            modalContent.classList.add('scale-95');
+            popupModal.classList.add('opacity-0');
+            setTimeout(() => popupModal.classList.add('pointer-events-none'), 500);
+
+            // Show confirm modal
+            confirmModal.classList.remove('opacity-0', 'pointer-events-none');
+            confirmModalContent.classList.remove('scale-95');
+        };
+
+        // Show initial modal after 5 seconds
+        setTimeout(showModal, 5000);
+
+        // --- Event Listeners ---
+        // "X" button on the first modal shows the confirmation modal
+        closePopupButton.addEventListener('click', showConfirmModal);
+        
+        // Clicking "Yes, I'm sure" on the second modal closes everything
+        confirmYesButton.addEventListener('click', hideAllModals);
+
+        // Clicking "Take me back" on the second modal goes back to the first one
+        confirmNoButton.addEventListener('click', () => {
+            // Hide confirm modal
+            confirmModalContent.classList.add('scale-95');
+            confirmModal.classList.add('opacity-0');
+            setTimeout(() => confirmModal.classList.add('pointer-events-none'), 500);
+            
+            // Show first modal again
+            showModal();
+        });
+
+        // Clicking outside the modals closes them
+        popupModal.addEventListener('click', (e) => e.target === popupModal && showConfirmModal());
+        confirmModal.addEventListener('click', (e) => e.target === confirmModal && hideAllModals());
+        
+        // Pressing Escape closes everything
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideAllModals();
+            }
+        });
+        
+        // --- Mobile Menu Logic ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMobileMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // --- Header Style on Scroll ---
+        const header = document.getElementById('main-header');
+        const nav = header.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-white', 'shadow-md');
+                nav.classList.remove('text-white');
+                nav.classList.add('text-gray-800');
+            } else {
+                header.classList.remove('bg-white', 'shadow-md');
+                nav.classList.add('text-white');
+                nav.classList.remove('text-gray-800');
+            }
+        });
+
+        // --- Fade-in Sections on Scroll ---
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Animate only once
+                }
+            });
+        }, { threshold: 0.15 });
+
+        sections.forEach(section => observer.observe(section));
+
+    </script>
+    <!-- jQuery (required for Mailchimp validation) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//s3.amazonaws.com/downloads/mailchimp.com/js/mc-validate.js"></script>
+    <script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';fnames[6]='COMPANY';ftypes[6]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+</body>
+</html>

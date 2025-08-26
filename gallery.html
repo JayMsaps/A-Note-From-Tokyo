@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - A note from Tokyo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter (sans-serif) & Shippori Mincho (serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* Custom styles to complement Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F5F2; /* Soft off-white background */
+            color: #1a1a1a;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Shippori Mincho', serif;
+        }
+        
+        /* Parallax effect for static background sections */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Animation for elements fading in */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8F5F2; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- =========== HEADER & NAVIGATION =========== -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white shadow-md">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex justify-between items-center text-gray-800">
+                <a href="index.html" class="text-xl font-semibold tracking-wider">A note from Tokyo</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="hover:text-indigo-600 transition-colors">Home</a>
+                    <a href="about.html" class="hover:text-indigo-600 transition-colors">About</a>
+                    <a href="gallery.html" class="text-indigo-600 font-semibold transition-colors">Gallery</a>
+                    <a href="contact.html" class="hover:text-indigo-600 transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-50">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <button id="close-mobile-menu" class="absolute top-6 right-6">
+                <i data-feather="x" class="w-8 h-8"></i>
+            </button>
+            <a href="index.html" class="text-2xl font-semibold mobile-link">Home</a>
+            <a href="about.html" class="text-2xl font-semibold mobile-link">About</a>
+            <a href="gallery.html" class="text-2xl font-semibold mobile-link text-indigo-600">Gallery</a>
+            <a href="contact.html" class="text-2xl font-semibold mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <main>
+        <!-- =========== "COMING SOON" HERO SECTION =========== -->
+        <section class="h-screen flex items-center justify-center text-white parallax" style="background-image: url('https://images.adsttc.com/media/images/588e/b6dc/e58e/ce7b/0300/01c5/medium_jpg/2013123_OS_N522_publication.jpg?1485747919');">
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+            <div class="text-center z-10 p-4 fade-in-section">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">Coming Soon</h1>
+                <p class="text-lg md:text-xl font-light max-w-2xl mx-auto" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">
+                    We are carefully curating a collection of our best work for the gallery. Please check back soon to see the visual story of Tokyo unfold.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Feather Icons Initialization ---
+        feather.replace();
+        
+        // --- Mobile Menu Logic ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMobileMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // --- Fade-in Section on Load ---
+        // Since there's only one main section, we can make it visible on load.
+        window.addEventListener('load', () => {
+            const section = document.querySelector('.fade-in-section');
+            if(section) {
+                section.classList.add('is-visible');
+            }
+        });
+
+    </script>
+</body>
+</html>
