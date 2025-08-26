@@ -8,7 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Inter (sans-serif) & Shippori Mincho (serif) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,20 +20,43 @@
         /* Custom styles to complement Tailwind */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F8F5F2; /* Soft off-white background */
+            background-color: #F8F5F2;
             color: #1a1a1a;
         }
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6, .logo-font {
             font-family: 'Shippori Mincho', serif;
         }
         
-        /* Parallax effect for static background sections */
+        /* Parallax effect */
         .parallax {
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
+        }
+        
+        /* Japanese Flag Background */
+        .flag-bg {
+            position: relative;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        .flag-bg::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background-color: #BC002D;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .flag-bg > * {
+            position: relative;
+            z-index: 2;
         }
 
         /* Animation for elements fading in on scroll */
@@ -60,12 +83,15 @@
     <header id="main-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white shadow-md">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center text-gray-800">
-                <a href="index.html" class="text-xl font-semibold tracking-wider">A note from Tokyo</a>
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="hover:text-indigo-600 transition-colors">Home</a>
-                    <a href="about.html" class="text-indigo-600 font-semibold transition-colors">About</a>
-                    <a href="gallery.html" class="hover:text-indigo-600 transition-colors">Gallery</a>
-                    <a href="contact.html" class="hover:text-indigo-600 transition-colors">Contact</a>
+                <a href="index.html" class="flex items-center gap-2 text-xl tracking-wider">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#BC002D"/></svg>
+                    <span class="logo-font font-semibold">A note from Tokyo</span>
+                </a>
+                <div class="hidden md:flex space-x-8 items-center font-medium uppercase text-sm tracking-widest">
+                    <a href="index.html" class="hover:text-indigo-600 transition-colors">HOME</a>
+                    <a href="about.html" class="text-indigo-600 transition-colors">ABOUT</a>
+                    <a href="gallery.html" class="hover:text-indigo-600 transition-colors">GALLERY</a>
+                    <a href="contact.html" class="hover:text-indigo-600 transition-colors">CONTACT</a>
                 </div>
                 <button id="mobile-menu-button" class="md:hidden">
                     <i data-feather="menu" class="w-6 h-6"></i>
@@ -76,31 +102,27 @@
     
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-50">
-        <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <button id="close-mobile-menu" class="absolute top-6 right-6">
-                <i data-feather="x" class="w-8 h-8"></i>
-            </button>
-            <a href="index.html" class="text-2xl font-semibold mobile-link">Home</a>
-            <a href="about.html" class="text-2xl font-semibold mobile-link text-indigo-600">About</a>
-            <a href="gallery.html" class="text-2xl font-semibold mobile-link">Gallery</a>
-            <a href="contact.html" class="text-2xl font-semibold mobile-link">Contact</a>
+        <div class="flex flex-col items-center justify-center h-full space-y-8 uppercase tracking-widest">
+            <button id="close-mobile-menu" class="absolute top-6 right-6"><i data-feather="x" class="w-8 h-8"></i></button>
+            <a href="index.html" class="text-2xl font-semibold mobile-link">HOME</a>
+            <a href="about.html" class="text-2xl font-semibold mobile-link text-indigo-600">ABOUT</a>
+            <a href="gallery.html" class="text-2xl font-semibold mobile-link">GALLERY</a>
+            <a href="contact.html" class="text-2xl font-semibold mobile-link">CONTACT</a>
         </div>
     </div>
 
     <main>
         <!-- =========== HERO BANNER FOR ABOUT PAGE =========== -->
-        <section class="h-[60vh] flex items-center justify-center text-white parallax" style="background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/tokyo-downtown-skyline-at-sunset-vladimir-zakharov.jpg');">
-            <div class="absolute inset-0 bg-black opacity-50"></div>
+        <section class="h-[60vh] flex items-center justify-center parallax flag-bg">
             <div class="text-center z-10 p-4 fade-in-section">
-                <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">Our Philosophy</h1>
-                <p class="text-lg md:text-xl font-light" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">Capturing the essence of a city that never stops dreaming.</p>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight uppercase text-black">Our Philosophy</h1>
             </div>
         </section>
 
         <!-- =========== OUR MISSION SECTION =========== -->
         <section class="py-20 md:py-32 bg-white">
             <div class="container mx-auto px-6 text-center max-w-3xl fade-in-section">
-                <h2 class="text-3xl md:text-4xl font-semibold mb-6">Our Mission</h2>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-6">OUR MISSION</h2>
                 <p class="text-lg text-gray-700 leading-relaxed">
                     "A Note From Tokyo" is more than a collection of images; it's a visual dialogue with one of the world's most fascinating cities. Our mission is to look beyond the iconic landmarks and capture the quiet, fleeting moments that define everyday life in Tokyo. We seek the beauty in the mundane, the story in the shadows, and the soul in the silent spaces between the city's vibrant pulse.
                 </p>
@@ -109,63 +131,50 @@
         
         <!-- =========== THE PHILOSOPHY SECTION =========== -->
         <section class="py-20 md:py-32">
-            <div class="container mx-auto px-6">
-                <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-                    <div class="fade-in-section">
-                        <img src="https://cdn.britannica.com/36/20236-004-18C48D44/chu-mon-compound-Horyu-Temple-Ikaruga-Nara-prefecture.jpg" alt="Ancient Japanese temple" class="rounded-lg shadow-xl w-full h-auto object-cover">
-                    </div>
-                    <div class="fade-in-section">
-                        <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">Wabi-Sabi</h3>
-                        <h2 class="text-3xl md:text-4xl font-semibold my-4">Finding Beauty in Imperfection</h2>
-                        <p class="text-gray-700 leading-relaxed mb-6">
-                            Our work is deeply influenced by the Japanese philosophy of <strong>wabi-sabi</strong>. This worldview centers on the acceptance of transience and imperfection. We are drawn to the weathered textures of old wood, the asymmetry of a handcrafted bowl, and the quiet grace of an aging building. It is in these details that we find a more profound and authentic beauty.
-                        </p>
-                    </div>
+            <div class="container mx-auto px-6 fade-in-section relative z-10">
+                <div class="max-w-4xl mx-auto bg-white/90 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-lg text-center">
+                    <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">Wabi-Sabi</h3>
+                    <h2 class="text-3xl md:text-4xl font-semibold my-4">FINDING BEAUTY IN IMPERFECTION</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        Our work is deeply influenced by the Japanese philosophy of <strong>wabi-sabi</strong>. This worldview centers on the acceptance of transience and imperfection. We are drawn to the weathered textures of old wood, the asymmetry of a handcrafted bowl, and the quiet grace of an aging building. It is in these details that we find a more profound and authentic beauty.
+                    </p>
                 </div>
             </div>
         </section>
 
         <!-- =========== OUR STORY SECTION =========== -->
         <section class="py-20 md:py-32 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-                    <div class="fade-in-section md:order-2">
-                        <img src="https://byfood.b-cdn.net/api/public/assets/9544/content" alt="A person walking in a Tokyo alley with lanterns" class="rounded-lg shadow-xl w-full h-auto object-cover">
-                    </div>
-                    <div class="fade-in-section md:order-1">
-                        <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">The Journey</h3>
-                        <h2 class="text-3xl md:text-4xl font-semibold my-4">A Note That Became a Story</h2>
-                        <p class="text-gray-700 leading-relaxed mb-6">
-                            This project began as a simple series of notes—observations jotted down during late-night walks through Shinjuku and early morning visits to Tsukiji. It grew into a passion for documenting the city's dualities: its reverence for ancient tradition and its relentless pursuit of the future. Each photograph and story is a note from us to you, an invitation to see Tokyo through our eyes.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =========== CALL TO ACTION SECTION =========== -->
-        <section class="py-20 md:py-32 text-center">
-             <div class="container mx-auto px-6 fade-in-section">
-                <h2 class="text-3xl md:text-4xl font-semibold mb-4">Explore the Collection</h2>
-                <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Our gallery is a curated journey through the moments that have moved us. We invite you to explore the visual story of Tokyo.</p>
-                <a href="gallery.html" class="inline-block bg-indigo-600 text-white font-bold py-4 px-8 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    View The Gallery
-                </a>
+            <div class="container mx-auto px-6 text-center max-w-3xl fade-in-section">
+                <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">The Journey</h3>
+                <h2 class="text-3xl md:text-4xl font-semibold my-4">A NOTE THAT BECAME A STORY</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    This project began as a simple series of notes—observations jotted down during late-night walks through Shinjuku and early morning visits to Tsukiji. It grew into a passion for documenting the city's dualities: its reverence for ancient tradition and its relentless pursuit of the future. Each photograph and story is a note from us to you, an invitation to see Tokyo through our eyes.
+                </p>
             </div>
         </section>
     </main>
 
     <!-- =========== FOOTER =========== -->
-    <footer class="bg-white pt-16 pb-8 border-t">
-        <div class="container mx-auto px-6 text-center">
-             <h3 class="text-2xl font-semibold mb-6">Follow the Journey</h3>
+    <footer class="bg-white">
+        <!-- Google Map Embed -->
+        <div class="w-full h-[400px]">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.243588325985!2d139.7899500763567!3d35.6465692312676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601889f5f3363525%3A0x566c336ed3422153!2s3-ch%C5%8Dme-7-18%20Ariake%2C%20Koto%20City%2C%20Tokyo%20135-0063%2C%20Japan!5e0!3m2!1sen!2sus!4v1724674069317!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="container mx-auto px-6 py-12 text-center">
+             <div class="mb-8">
+                <h3 class="text-xl font-semibold mb-2 uppercase">Contact Us</h3>
+                <p class="text-gray-600">3-chōme-7 Ariake, Koto City, Tokyo 135-0063, Japan</p>
+                <a href="mailto:hello@anotefromtokyo.com" class="text-indigo-600 hover:underline">hello@anotefromtokyo.com</a>
+             </div>
              <!-- Instagram Feed Embed -->
              <div class="max-w-4xl mx-auto mb-8">
                 <div class='sk-instagram-feed' data-embed-id='25592416'></div><script src='https://widgets.sociablekit.com/instagram-feed/widget.js' defer></script>
              </div>
              <div class="flex justify-center space-x-6 mb-6">
                  <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors"><i data-feather="instagram"></i></a>
-                 <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors"><i data-feather="twitter"></i></a>
+                 <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                 </a>
                  <a href="#" class="text-gray-500 hover:text-indigo-600 transition-colors"><i data-feather="youtube"></i></a>
              </div>
             <div class="text-gray-500 text-sm">
@@ -194,7 +203,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Animate only once
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.15 });
