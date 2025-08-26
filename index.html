@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - A note from Tokyo</title>
+    <title>A note from Tokyo</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,7 +11,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;700&family=Open+Sans:wght@700&display=swap" rel="stylesheet">
     
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
@@ -22,39 +22,47 @@
             font-family: 'Inter', sans-serif;
             background-color: #F8F5F2;
             color: #1a1a1a;
-            /* Parallax background for the whole page */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dcdad7' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            background-attachment: fixed;
-            background-position: center;
         }
         h1, h2, h3, h4, h5, h6, .logo-font {
             font-family: 'Shippori Mincho', serif;
         }
+        .popup-title {
+            font-family: 'Open Sans', sans-serif;
+        }
         
-        /* Japanese Flag Background */
-        .flag-bg {
+        /* Parallax effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Japanese Flag Hero */
+        .hero-flag {
             position: relative;
             background-color: #ffffff;
             overflow: hidden;
         }
-        .flag-bg::before {
+        .hero-flag::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             width: 300px;
             height: 300px;
-            background-color: #BC002D;
+            background-color: #BC002D; /* Japanese red circle color */
             border-radius: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
         }
-        .flag-bg > * {
+        .hero-flag > * {
             position: relative;
             z-index: 2;
         }
 
-        /* Animation for elements fading in */
+        /* Animation for elements fading in on scroll */
         .fade-in-section {
             opacity: 0;
             transform: translateY(30px);
@@ -70,12 +78,87 @@
         ::-webkit-scrollbar-track { background: #F8F5F2; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        
+        /* 16:9 Aspect Ratio for Video */
+        .aspect-16-9 {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+        }
+        .aspect-16-9 iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Sticky Soundcloud Player */
+        #sticky-player-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            transition: transform 0.3s ease-in-out;
+        }
+        #sticky-player-container:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- =========== POP-UP MODAL =========== -->
+    <div id="popup-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-500">
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-8 relative transform scale-95 transition-all duration-500">
+            <button id="close-popup" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <div class="text-center">
+                <h2 class="popup-title text-2xl md:text-3xl font-bold uppercase mb-2 text-gray-900">Your Chance to Win!</h2>
+                <p class="text-gray-600 mb-6">Sign up for exclusive notes from Tokyo and complete tasks for a chance to win <span class="font-bold text-blue-600">$1,000,000</span>.</p>
+                <!-- Mailchimp form for the pop-up -->
+                <div id="mc_embed_signup_popup">
+                    <form action="https://gmail.us10.list-manage.com/subscribe/post?u=9a154649f2974d15e96616f1b&amp;id=cc4d1b69b2&amp;f_id=00a2d1e1f0" method="post" id="mc-embedded-subscribe-form-popup" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div class="mc-field-group">
+                            <input type="email" name="EMAIL" class="required email w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" id="mce-EMAIL-popup" required placeholder="your.email@example.com">
+                        </div>
+                        <div id="mce-responses-popup" class="clear foot hidden">
+                            <div class="response" id="mce-error-response-popup" style="display: none;"></div>
+                            <div class="response" id="mce-success-response-popup" style="display: none;"></div>
+                        </div>
+                        <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                            <input type="text" name="b_9a154649f2974d15e96616f1b_cc4d1b69b2" tabindex="-1" value="">
+                        </div>
+                        <div class="clear mt-4">
+                            <input type="submit" name="subscribe" id="mc-embedded-subscribe-popup" class="button w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer" value="Sign Up & Enter">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- =========== CONFIRMATION POP-UP MODAL =========== -->
+    <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-500">
+        <div id="confirm-modal-content" class="bg-white rounded-lg shadow-2xl w-11/12 max-w-md p-8 relative transform scale-95 transition-all duration-500">
+             <div class="text-center">
+                <h2 class="popup-title text-2xl md:text-3xl font-bold uppercase mb-2 text-gray-900">Are you sure?</h2>
+                <p class="text-gray-600 mb-6">This is a once-in-a-lifetime opportunity to win <span class="font-bold text-blue-600">$1,000,000</span>. Are you sure you want to miss out?</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button id="confirm-no-button" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Take Me Back!
+                    </button>
+                    <button id="confirm-yes-button" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-md hover:bg-red-700 transition">
+                        Yes, I'm sure
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- =========== HEADER & NAVIGATION =========== -->
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white shadow-md">
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 bg-white shadow-md">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex justify-between items-center text-gray-800">
                 <a href="index.html" class="flex items-center gap-2 text-xl tracking-wider">
@@ -84,7 +167,7 @@
                 </a>
                 <div class="hidden md:flex space-x-8 items-center font-medium uppercase text-sm tracking-widest">
                     <a href="index.html" class="hover:text-indigo-600 transition-colors">HOME</a>
-                    <a href="about.html" class="text-indigo-600 transition-colors">ABOUT</a>
+                    <a href="about.html" class="hover:text-indigo-600 transition-colors">ABOUT</a>
                     <a href="gallery.html" class="hover:text-indigo-600 transition-colors">GALLERY</a>
                     <a href="contact.html" class="hover:text-indigo-600 transition-colors">CONTACT</a>
                 </div>
@@ -100,58 +183,72 @@
         <div class="flex flex-col items-center justify-center h-full space-y-8 uppercase tracking-widest">
             <button id="close-mobile-menu" class="absolute top-6 right-6"><i data-feather="x" class="w-8 h-8"></i></button>
             <a href="index.html" class="text-2xl font-semibold mobile-link">HOME</a>
-            <a href="about.html" class="text-2xl font-semibold mobile-link text-indigo-600">ABOUT</a>
+            <a href="about.html" class="text-2xl font-semibold mobile-link">ABOUT</a>
             <a href="gallery.html" class="text-2xl font-semibold mobile-link">GALLERY</a>
             <a href="contact.html" class="text-2xl font-semibold mobile-link">CONTACT</a>
         </div>
     </div>
 
     <main>
-        <!-- =========== HERO BANNER FOR ABOUT PAGE =========== -->
-        <section class="h-[60vh] flex items-center justify-center flag-bg">
+        <!-- =========== HERO BANNER =========== -->
+        <section id="home" class="h-screen flex items-center justify-center hero-flag parallax">
             <div class="text-center z-10 p-4">
                 <div class="relative mb-4">
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight uppercase text-black">Our Philosophy</h1>
-                    <h1 class="absolute inset-0 text-4xl md:text-6xl font-bold tracking-tight uppercase text-white" style="clip-path: circle(150px at center);">Our Philosophy</h1>
+                    <h1 class="text-6xl md:text-9xl font-bold text-black tracking-tighter">東京より</h1>
+                    <h1 class="absolute inset-0 text-6xl md:text-9xl font-bold text-white tracking-tighter" style="clip-path: circle(150px at center);">東京より</h1>
                 </div>
-                 <div class="relative">
-                    <p class="logo-font text-xl md:text-2xl max-w-2xl mx-auto text-black uppercase">A note from Tokyo</p>
-                    <p class="absolute inset-0 logo-font text-xl md:text-2xl max-w-2xl mx-auto text-white uppercase" style="clip-path: circle(150px at center);">A note from Tokyo</p>
+                <div class="relative">
+                    <div class="logo-font text-xl text-center text-black uppercase leading-tight">
+                        <span>A NOTE</span><br><span>FROM TOKYO</span>
+                    </div>
+                    <div class="absolute inset-0 logo-font text-xl text-center text-white uppercase leading-tight" style="clip-path: circle(150px at center);">
+                        <span>A NOTE</span><br><span>FROM TOKYO</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- =========== OUR MISSION SECTION =========== -->
-        <section class="py-20 md:py-32 bg-white">
+        <!-- =========== INTRO SECTION =========== -->
+        <section id="intro" class="py-20 md:py-32 bg-white">
             <div class="container mx-auto px-6 text-center max-w-3xl fade-in-section">
-                <h2 class="text-3xl md:text-4xl font-semibold mb-6 uppercase">Our Mission</h2>
+                <h2 class="text-3xl md:text-4xl font-semibold mb-6">An Invitation to Stillness</h2>
                 <p class="text-lg text-gray-700 leading-relaxed">
-                    "A Note From Tokyo" is more than a collection of images; it's a visual dialogue with one of the world's most fascinating cities. Our mission is to look beyond the iconic landmarks and capture the quiet, fleeting moments that define everyday life in Tokyo. We seek the beauty in the mundane, the story in the shadows, and the soul in the silent spaces between the city's vibrant pulse.
+                    Tokyo is a city of beautiful contradictions. A place where ancient temples stand in the shadow of neon-lit skyscrapers, and tranquil gardens offer quiet refuge from the bustling energy of the streets. This is our visual journal, a collection of moments and stories from the heart of Japan.
                 </p>
             </div>
         </section>
         
-        <!-- =========== THE PHILOSOPHY SECTION =========== -->
-        <section class="py-20 md:py-32">
+        <!-- =========== EMBEDDED VIDEO SECTION =========== -->
+        <section class="py-20 md:py-32 parallax" style="background-image: url('https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=2036&auto=format&fit=crop');">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
             <div class="container mx-auto px-6 fade-in-section relative z-10">
-                <div class="max-w-4xl mx-auto bg-white/90 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-lg text-center">
-                    <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">Wabi-Sabi</h3>
-                    <h2 class="text-3xl md:text-4xl font-semibold my-4 uppercase">Finding Beauty in Imperfection</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        Our work is deeply influenced by the Japanese philosophy of <strong>wabi-sabi</strong>. This worldview centers on the acceptance of transience and imperfection. We are drawn to the weathered textures of old wood, the asymmetry of a handcrafted bowl, and the quiet grace of an aging building. It is in these details that we find a more profound and authentic beauty.
-                    </p>
+                <div class="max-w-4xl mx-auto text-center mb-12 text-white">
+                     <h2 class="text-3xl md:text-4xl font-semibold mb-4">A Glimpse of Tokyo</h2>
+                     <p class="text-gray-300">Immerse yourself in the sights and sounds that define this captivating city.</p>
+                </div>
+                <div class="aspect-16-9 rounded-lg overflow-hidden shadow-2xl mx-auto max-w-5xl">
+                    <iframe src="https://www.youtube.com/embed/6DQxRQb9dCE?si=cCZ8Vh4MsyWshBIn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
 
-        <!-- =========== OUR STORY SECTION =========== -->
-        <section class="py-20 md:py-32 bg-white">
-            <div class="container mx-auto px-6 text-center max-w-3xl fade-in-section">
-                <h3 class="text-sm uppercase text-indigo-600 font-semibold tracking-widest">The Journey</h3>
-                <h2 class="text-3xl md:text-4xl font-semibold my-4 uppercase">A Note That Became a Story</h2>
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    This project began as a simple series of notes—observations jotted down during late-night walks through Shinjuku and early morning visits to Tsukiji. It grew into a passion for documenting the city's dualities: its reverence for ancient tradition and its relentless pursuit of the future. Each photograph and story is a note from us to you, an invitation to see Tokyo through our eyes.
-                </p>
+        <!-- =========== MAILCHIMP WIDGET SECTION =========== -->
+        <section id="contact" class="py-20 md:py-32 bg-gray-800 text-white">
+            <div class="container mx-auto px-6 text-center max-w-2xl fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-4">Join Our Journey</h2>
+                <p class="text-gray-300 mb-8">Receive monthly notes and exclusive photos directly from Tokyo. No spam, just stories.</p>
+                <div id="mc_embed_signup" class="w-full max-w-xl mx-auto">
+                    <form action="https://gmail.us10.list-manage.com/subscribe/post?u=9a154649f2974d15e96616f1b&amp;id=cc4d1b69b2&amp;f_id=00a2d1e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                        <div id="mc_embed_signup_scroll" class="flex flex-col sm:flex-row gap-4 items-center">
+                            <div class="mc-field-group flex-grow w-full">
+                                <input type="email" name="EMAIL" class="required email w-full px-5 py-4 border border-gray-600 bg-gray-700 bg-opacity-50 text-white rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-300" id="mce-EMAIL" required placeholder="Enter your email address">
+                            </div>
+                            <div class="clear">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button bg-indigo-600 text-white font-bold py-4 px-8 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer w-full sm:w-auto" value="Subscribe">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
@@ -189,9 +286,70 @@
         </div>
     </footer>
 
+    <!-- Sticky SoundCloud Player -->
+    <div id="sticky-player-container">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1734880683&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+
     <script>
         // --- Feather Icons Initialization ---
         feather.replace();
+
+        // --- Pop-up Modal Logic ---
+        const popupModal = document.getElementById('popup-modal');
+        const modalContent = document.getElementById('modal-content');
+        const closePopupButton = document.getElementById('close-popup');
+        const subscribeForm = document.getElementById('mc-embedded-subscribe-form-popup');
+        
+        const confirmModal = document.getElementById('confirm-modal');
+        const confirmModalContent = document.getElementById('confirm-modal-content');
+        const confirmYesButton = document.getElementById('confirm-yes-button');
+        const confirmNoButton = document.getElementById('confirm-no-button');
+
+        const showModal = () => {
+            popupModal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        };
+
+        const hideAllModals = () => {
+            modalContent.classList.add('scale-95');
+            confirmModalContent.classList.add('scale-95');
+            popupModal.classList.add('opacity-0');
+            confirmModal.classList.add('opacity-0');
+            setTimeout(() => {
+                popupModal.classList.add('pointer-events-none');
+                confirmModal.classList.add('pointer-events-none');
+            }, 500);
+        };
+        
+        const showConfirmModal = () => {
+            modalContent.classList.add('scale-95');
+            popupModal.classList.add('opacity-0');
+            setTimeout(() => popupModal.classList.add('pointer-events-none'), 500);
+
+            confirmModal.classList.remove('opacity-0', 'pointer-events-none');
+            confirmModalContent.classList.remove('scale-95');
+        };
+
+        if (!localStorage.getItem('popupShown')) {
+            setTimeout(() => {
+                showModal();
+                localStorage.setItem('popupShown', 'true');
+            }, 5000);
+        }
+
+        closePopupButton.addEventListener('click', showConfirmModal);
+        confirmYesButton.addEventListener('click', hideAllModals);
+        confirmNoButton.addEventListener('click', () => {
+            confirmModalContent.classList.add('scale-95');
+            confirmModal.classList.add('opacity-0');
+            setTimeout(() => confirmModal.classList.add('pointer-events-none'), 500);
+            showModal();
+        });
+
+        popupModal.addEventListener('click', (e) => e.target === popupModal && showConfirmModal());
+        confirmModal.addEventListener('click', (e) => e.target === confirmModal && hideAllModals());
+        subscribeForm.addEventListener('submit', () => setTimeout(hideAllModals, 500));
         
         // --- Mobile Menu Logic ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -215,7 +373,6 @@
         }, { threshold: 0.15 });
 
         sections.forEach(section => observer.observe(section));
-
     </script>
 </body>
 </html>
