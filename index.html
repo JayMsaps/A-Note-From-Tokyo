@@ -44,24 +44,11 @@
             position: relative;
             background-color: #ffffff;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .hero-flag::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 300px;
-            background-color: #BC002D; /* Japanese red circle color */
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-        }
-        .hero-flag > * {
-            position: relative;
-            z-index: 2;
-        }
-
+       
         /* Animation for elements fading in on scroll */
         .fade-in-section {
             opacity: 0;
@@ -91,18 +78,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-        }
-
-        /* Sticky Soundcloud Player */
-        #sticky-player-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            transition: transform 0.3s ease-in-out;
-        }
-        #sticky-player-container:hover {
-            transform: scale(1.05);
         }
     </style>
 </head>
@@ -190,23 +165,32 @@
     </div>
 
     <main>
-        <!-- =========== HERO BANNER =========== -->
-        <section id="home" class="h-screen flex items-center justify-center hero-flag parallax">
-            <div class="text-center z-10 p-4">
-                <div class="relative mb-4">
-                    <h1 class="text-6xl md:text-9xl font-bold text-black tracking-tighter">東京より</h1>
-                    <h1 class="absolute inset-0 text-6xl md:text-9xl font-bold text-white tracking-tighter" style="clip-path: circle(150px at center);">東京より</h1>
-                </div>
-                <div class="relative">
-                    <div class="logo-font text-xl text-center text-black uppercase leading-tight">
-                        <span>A NOTE</span><br><span>FROM TOKYO</span>
-                    </div>
-                    <div class="absolute inset-0 logo-font text-xl text-center text-white uppercase leading-tight" style="clip-path: circle(150px at center);">
-                        <span>A NOTE</span><br><span>FROM TOKYO</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- HERO SECTION -->
+<section class="relative flex items-center justify-center h-screen bg-white">
+  <!-- Red Circle -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+              w-[300px] h-[300px] bg-[#BC002D] rounded-full z-10"></div>
+
+  <!-- Text Layer (black) -->
+  <div class="absolute text-center z-20 text-black">
+    <h1 class="text-6xl md:text-9xl font-bold tracking-tighter mb-4">東京より</h1>
+    <div class="logo-font text-xl uppercase leading-tight">
+      <span>A NOTE</span><br><span>FROM TOKYO</span>
+    </div>
+  </div>
+
+  <!-- Text Layer (white, clipped to circle) -->
+  <div class="absolute text-center z-30 text-white [clip-path:circle(150px_at_center)]">
+    <h1 class="text-6xl md:text-9xl font-bold tracking-tighter mb-4">東京より</h1>
+    <div class="logo-font text-xl uppercase leading-tight">
+      <span>A NOTE</span><br><span>FROM TOKYO</span>
+    </div>
+  </div>
+</section>
+
+
+
+
 
         <!-- =========== INTRO SECTION =========== -->
         <section id="intro" class="py-20 md:py-32 bg-white">
@@ -227,10 +211,18 @@
                      <p class="text-gray-300">Immerse yourself in the sights and sounds that define this captivating city.</p>
                 </div>
                 <div class="aspect-16-9 rounded-lg overflow-hidden shadow-2xl mx-auto max-w-7xl">
-                    <iframe src="https://www.youtube.com/embed/6DQxRQb9dCE?si=cCZ8Vh4MsyWshBIn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube-nocookie.com/embed/6DQxRQb9dCE?si=kjjVvYOSnIcqgsgb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
+        
+        <!-- =========== SOUNDCLOUD PLAYER SECTION =========== -->
+         <section class="bg-white py-4">
+            <div class="container mx-auto px-6">
+                <iframe class="w-full" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/36701924&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+            </div>
+        </section>
+
 
         <!-- =========== MAILCHIMP WIDGET SECTION =========== -->
         <section id="contact" class="py-20 md:py-32 bg-gray-800 text-white">
@@ -285,11 +277,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Sticky SoundCloud Player -->
-    <div id="sticky-player-container">
-        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1734880683&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-    </div>
 
     <script>
         // --- Feather Icons Initialization ---
@@ -376,3 +363,4 @@
     </script>
 </body>
 </html>
+
