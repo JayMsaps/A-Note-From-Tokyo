@@ -158,19 +158,41 @@
     </div>
 
     <main>
-        <!-- =========== HERO BANNER FOR GALLERY PAGE =========== -->
-        <section class="h-[60vh] flex items-center justify-center flag-bg">
-            <div class="text-center z-10 p-4 fade-in-section">
-                <div class="relative mb-4">
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight uppercase text-black">GALLERY</h1>
-                    <h1 class="absolute inset-0 text-4xl md:text-6xl font-bold tracking-tight uppercase text-white" style="clip-path: circle(150px at center);">GALLERY</h1>
-                </div>
-                <div class="relative">
-                    <p class="logo-font text-xl md:text-2xl max-w-2xl mx-auto text-black">A curated collection of moments captured in the heart of Japan.</p>
-                    <p class="absolute inset-0 logo-font text-xl md:text-2xl max-w-2xl mx-auto text-white" style="clip-path: circle(150px at center);">A curated collection of moments captured in the heart of Japan.</p>
-                </div>
-            </div>
+        <!-- HERO SECTION (FIXED) -->
+        <section class="relative flex items-center justify-center h-[60vh] bg-white">
+          <!-- Red Circle -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                      w-[300px] h-[300px] bg-[#BC002D] rounded-full z-10"></div>
+
+          <!-- Text Layer (black) -->
+          <div class="absolute text-center z-20 text-black">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tight uppercase">GALLERY</h1>
+            <p class="logo-font text-lg mt-4 leading-snug">A curated collection of moments captured in the heart of<br>Japan.</p>
+          </div>
+
+          <!-- Text Layer (white, clipped to circle) -->
+          <div class="absolute text-center z-30 text-white [clip-path:circle(150px_at_center)]">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tight uppercase">GALLERY</h1>
+            <p class="logo-font text-lg mt-4 leading-snug">A curated collection of moments captured in the heart of<br>Japan.</p>
+          </div>
         </section>
+
+  <!-- Text Layer (black) -->
+  <div class="absolute text-center z-20 text-black">
+    <h1 class="text-6xl md:text-9xl font-bold tracking-tighter mb-4">GALLERY</h1>
+    <div class="logo-font text-xl uppercase leading-tight">
+      <span>A NOTE</span><br><span>FROM TOKYO</span>
+    </div>
+  </div>
+
+  <!-- Text Layer (white, clipped to circle) -->
+  <div class="absolute text-center z-30 text-white [clip-path:circle(150px_at_center)]">
+    <h1 class="text-6xl md:text-9xl font-bold tracking-tighter mb-4">GALLERY</h1>
+    <div class="logo-font text-xl uppercase leading-tight">
+      <span>A NOTE</span><br><span>FROM TOKYO</span>
+    </div>
+  </div>
+</section>
 
         <!-- =========== GALLERY SECTION =========== -->
         <section class="container mx-auto px-6 py-12 md:py-20">
@@ -312,5 +334,6 @@
     </script>
 </body>
 </html>
+
 
 
